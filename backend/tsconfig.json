@@ -6,7 +6,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types"],
-    "outDir": "./dist",
+    "outDir": "dist",
+    "rootDir": "src",
     "strict": true
   },
   "include": ["src/**/*", ".env"]
