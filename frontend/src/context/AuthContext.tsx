@@ -35,8 +35,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       setUsername(res.data.user.username);
       setMoney(res.data.user.money);
-    } catch {
-      logout();
+    } catch (err) {
+      console.error('❗ fetchUserData 실패:', err);
+      // logout();
     } finally {
       setLoading(false);
     }
