@@ -25,11 +25,4 @@
 | 배포      | `Vercel`                              |
 
 ---
-
-## 🔧 실행 방법 (로컬 개발)
-
-1. 프로젝트 클론
-
-```bash
-git clone https://github.com/your-username/playground.git
-cd playground
+배포 https://gameweb-roof.vercel.app/
