@@ -7,9 +7,8 @@ import rankingRouter from './routes/ranking';
 
 const app = express();
 
-
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://gameproject-htej.onrender.com'],
     credentials: true,
   }));
 app.use(express.json());
