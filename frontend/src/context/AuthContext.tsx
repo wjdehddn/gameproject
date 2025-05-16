@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+  useRef,
+} from 'react';
 import axios from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +26,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [money, setMoney] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const navigateRef = useRef<ReturnType<typeof useNavigate>>();
+
+  // ✅ Navigation 컴포넌트로 navigate 인스턴스를 안전하게 저장
+  const NavigationBridge = () => {
+    navigateRef.current = useNavigate();
+    return null;
+  };
+
   // ✅ 유저 정보 요청 함수
   const fetchUserData = async () => {
     const token = localStorage.getItem('token');
@@ -38,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setMoney(res.data.user.money);
     } catch (err) {
       console.error('❗ fetchUserData 실패:', err);
-      logout();
+      logout(); // ⚠️ 실패 시 자동 로그아웃
     } finally {
       setLoading(false);
     }
@@ -48,13 +63,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchUserData();
   }, []);
 
-  // 🧠 로그인 (토큰 저장 후 유저 정보 요청)
+  // 로그인
   const login = async (token: string) => {
     localStorage.setItem('token', token);
     await fetchUserData();
   };
 
-  // 🔄 게임 후 보유금액만 갱신
+  // 게임 후 보유 금액만 업데이트
   const updateMoney = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -72,13 +87,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const navigate = useNavigate();
-
+  // 로그아웃
   const logout = () => {
     localStorage.removeItem('token');
     setUsername(null);
     setMoney(null);
-    navigate('/auth/login'); // ✅ React 방식의 리다이렉트
+    navigateRef.current?.('/auth/login'); // ✅ React 방식의 리다이렉션
   };
 
   return (
@@ -93,6 +107,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         updateMoney,
       }}
     >
+      <NavigationBridge />
       {children}
     </AuthContext.Provider>
   );
@@ -100,6 +115,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  if (!context)
+    throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
