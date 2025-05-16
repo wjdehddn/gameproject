@@ -25,14 +25,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(null);
   const [money, setMoney] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigateRef = useRef<ReturnType<typeof useNavigate>>();
 
+  const navigateRef = useRef<ReturnType<typeof useNavigate> | null>(null);
+
+  // ✅ NavigationBridge 내부 컴포넌트에서 navigate 초기화
   const NavigationBridge = () => {
-    navigateRef.current = useNavigate();
+    const navigate = useNavigate();
+    useEffect(() => {
+      navigateRef.current = navigate;
+    }, [navigate]);
     return null;
   };
 
-  // 🔐 로그아웃 함수 (가장 먼저 선언)
   const logout = () => {
     localStorage.removeItem('token');
     setUsername(null);
@@ -40,7 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     navigateRef.current?.('/auth/login');
   };
 
-  // ✅ 유저 정보 요청 함수
   const fetchUserData = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -59,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setMoney(res.data.user.money);
     } catch (err) {
       console.error('❗ fetchUserData 실패:', err);
-      logout(); // 이제 문제 없음!
+      logout();
     } finally {
       setLoading(false);
     }
