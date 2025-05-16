@@ -21,6 +21,7 @@ function spaFallback(): Plugin {
 }
 
 export default defineConfig({
+  base: '/',
   plugins: [react(), spaFallback()],
   server: {
     proxy: {
