@@ -13,24 +13,20 @@ const Ranking = () => {
 
 useEffect(() => {
   const fetchRanking = async () => {
-  try {
-    const res = await axios.get('/ranking/board', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
+    try {
+      const res = await axios.get('/ranking/board', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
 
-    console.log('📊 랭킹 응답:', res.data);
-
-    if (Array.isArray(res.data.rankings)) {
-      setRankingList(res.data.rankings);
-    } else {
-      console.warn('⚠️ 예상과 다른 응답 구조:', res.data);
+      if (Array.isArray(res.data.rankings)) {
+        setRankingList(res.data.rankings);
+      }
+    } catch (err) {
+      console.error('랭킹 목록 불러오기 실패', err);
     }
-  } catch (err: any) {
-    console.error('❌ 랭킹 목록 불러오기 실패:', err.message, err.response?.data || err);
-  }
-};
+  };
 
   const fetchMyRank = async () => {
     try {
