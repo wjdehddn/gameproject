@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import axios from '../api/axios';
-import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 
 interface AuthContextProps {
   username: string | null;
@@ -77,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
     setUsername(null);
     setMoney(null);
-    navigate('/auth/login'); // ✅ React Router로 이동
+    window.location.href = '/auth/login';
   };
 
   return (
