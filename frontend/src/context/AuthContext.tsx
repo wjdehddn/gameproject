@@ -25,13 +25,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(null);
   const [money, setMoney] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-
   const navigateRef = useRef<ReturnType<typeof useNavigate>>();
 
-  // ✅ Navigation 컴포넌트로 navigate 인스턴스를 안전하게 저장
   const NavigationBridge = () => {
     navigateRef.current = useNavigate();
     return null;
+  };
+
+  // 🔐 로그아웃 함수 (가장 먼저 선언)
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUsername(null);
+    setMoney(null);
+    navigateRef.current?.('/auth/login');
   };
 
   // ✅ 유저 정보 요청 함수
@@ -53,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setMoney(res.data.user.money);
     } catch (err) {
       console.error('❗ fetchUserData 실패:', err);
-      logout(); // ⚠️ 실패 시 자동 로그아웃
+      logout(); // 이제 문제 없음!
     } finally {
       setLoading(false);
     }
@@ -63,13 +69,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchUserData();
   }, []);
 
-  // 로그인
   const login = async (token: string) => {
     localStorage.setItem('token', token);
     await fetchUserData();
   };
 
-  // 게임 후 보유 금액만 업데이트
   const updateMoney = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -85,14 +89,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (err) {
       console.error('보유금액 업데이트 실패', err);
     }
-  };
-
-  // 로그아웃
-  const logout = () => {
-    localStorage.removeItem('token');
-    setUsername(null);
-    setMoney(null);
-    navigateRef.current?.('/auth/login'); // ✅ React 방식의 리다이렉션
   };
 
   return (
