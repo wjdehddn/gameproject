@@ -1,21 +1,20 @@
 {
-  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/auth/:match*",
-      "destination": "https://gameproject-7iji.onrender.com/auth/:match*"
+      "destination": "https://gameproject-htej.onrender.com/auth/:match*"
     },
     {
       "source": "/user/:match*",
-      "destination": "https://gameproject-7iji.onrender.com/user/:match*"
-    },
-    {
-      "source": "/game/:match*",
-      "destination": "https://gameproject-7iji.onrender.com/game/:match*"
+      "destination": "https://gameproject-htej.onrender.com/user/:match*"
     },
     {
       "source": "/ranking/:match*",
-      "destination": "https://gameproject-7iji.onrender.com/ranking/:match*"
+      "destination": "https://gameproject-htej.onrender.com/ranking/:match*"
+    },
+    {
+      "source": "/game/:match*",
+      "destination": "https://gameproject-htej.onrender.com/game/:match*"
     },
     {
       "source": "/(.*)",
