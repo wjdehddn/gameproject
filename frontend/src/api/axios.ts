@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '/',
-  withCredentials: false,
+  baseURL: import.meta.env.PROD
+    ? 'https://gameproject-htej.onrender.com' // 🔁 배포용
+    : 'http://localhost:5000',                // 🧪 로컬 개발용
+  withCredentials: true,
 });
 
 instance.interceptors.request.use((config) => {
