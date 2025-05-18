@@ -23,6 +23,9 @@ function spaFallback(): Plugin {
 export default defineConfig({
   base: '/',
   plugins: [react(), spaFallback()],
+  build: {
+    outDir: 'dist', // 기본값, 꼭 명시
+  },
   server: {
     proxy: {
       '/auth': {
