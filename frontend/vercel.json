@@ -1,22 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/auth/:match*",
-      "destination": "https://gameproject-htej.onrender.com/auth/:match*"
-    },
-    {
-      "source": "/user/:match*",
-      "destination": "https://gameproject-htej.onrender.com/user/:match*"
-    },
-    {
-      "source": "/ranking/:match*",
-      "destination": "https://gameproject-htej.onrender.com/ranking/:match*"
-    },
-    {
-      "source": "/game/:match*",
-      "destination": "https://gameproject-htej.onrender.com/game/:match*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
