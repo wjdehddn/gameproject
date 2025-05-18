@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: import.meta.env.PROD
-    ? 'https://gameproject-htej.onrender.com' // 🔁 배포용
+    ? 'https://gameproject-7iji.onrender.com' // 🔁 배포용
     : 'http://localhost:5000',                // 🧪 로컬 개발용
   withCredentials: true,
 });
