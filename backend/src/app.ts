@@ -8,7 +8,7 @@ import rankingRouter from './routes/ranking';
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'gameproject-sandy.vercel.app'],
+    origin: ['http://localhost:5173', 'https://gameproject-iqznsr8d7-wjdehddns-projects.vercel.app'],
     credentials: true,
   }));
 app.use(express.json());
