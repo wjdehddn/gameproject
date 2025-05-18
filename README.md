@@ -25,4 +25,7 @@
 | 배포      | `Vercel`                              |
 
 ---
-배포 https://gameweb-roof.vercel.app/
+배포 
+
+vercel : https://gameproject-sandy.vercel.app
+render : https://gameproject-7iji.onrender.com
