@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(localStorage.getItem('token'))
 
       setUsername(res.data.user.username);
       setMoney(res.data.user.money);
